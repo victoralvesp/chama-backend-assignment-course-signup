@@ -1,4 +1,6 @@
-﻿using CourseSignUp.Domain.Services.Abstractions;
+﻿using CourseSignUp.Domain;
+using CourseSignUp.Domain.Models.Messages;
+using CourseSignUp.Domain.Services.Abstractions;
 using CourseSignUp.Infraestructure.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,15 +12,14 @@ namespace CourseSignUp.Api.Courses
     [ApiController, Route("[controller]")]
     public class CoursesController : ControllerBase
     {
-        ICoursesService _coursesService;
-        ILecturerRepository _lecturerRepo;
-        ICoursesRepository _coursesRepo;
-        private IMessageBusService _messageBusService;
+        private readonly ICoursesService _coursesService;
+        private readonly ILecturerRepository _lecturerRepo;
+        private readonly IMessageBusService _messageBusService;
 
         [HttpGet, Route("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            var course = _coursesRepo.Find(id);
+            var course = await _coursesService.FindAsync(id);
             return Ok(new CourseDto(course));
         }
 
@@ -27,8 +28,8 @@ namespace CourseSignUp.Api.Courses
         {
             var lecturerId = createCourseDto.LecturerId;
             var lecturer = await _lecturerRepo.FindAsync(lecturerId);
-            var course = _coursesService.Create(createCourseDto.Name, lecturer, createCourseDto.Capacity);
-            course = await _coursesRepo.WriteNewAsync(course);
+            var course = await _coursesService.CreateAsync(createCourseDto.Name, lecturer, createCourseDto.Capacity);
+            
 
             return Ok(course);
         }
@@ -36,8 +37,8 @@ namespace CourseSignUp.Api.Courses
         [HttpPost, Route("{id}/sign-up")]
         public async Task<IActionResult> Post([FromBody] SignUpToCourseDto signUpToCourseDto)
         {
-            await _messageBusService.SendToTopic(Constants.NEW_SIGN_UP, JsonSerializer.Serialize(signUpToCourseDto));
-            return Ok(SystemTexts.NotifyUserThatTheyWillBeInformedByEmail(signUpToCourseDto.Student.Name));
+            await _messageBusService.SendToTopic(Constants.NEW_SIGN_UP_TOPIC, new NewSignUpMessage(signUpToCourseDto.CourseId, signUpToCourseDto.Student.ToDomain()));
+            return Ok(ChamaSystemTexts.NotifyUserThatTheyWillBeInformedByEmail(signUpToCourseDto.Student.Name));
         }
     }
 }

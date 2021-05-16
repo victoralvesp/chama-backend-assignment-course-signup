@@ -6,6 +6,6 @@ namespace CourseSignUp.Infraestructure.Abstractions
     public interface ICoursesRepository
     {
         Task<Course> WriteNewAsync(Course course);
-        Course Find(string id);
+        Task<Course> FindAsync(string id);
     }
 }

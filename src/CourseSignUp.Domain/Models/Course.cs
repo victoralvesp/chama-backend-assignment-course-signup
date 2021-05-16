@@ -4,13 +4,13 @@ namespace CourseSignUp.Domain.Models
 {
     public record Course
     {
-        public Course(string id, Lecturer lecturer, string name, int capacity, ImmutableArray<Student> students)
+        public Course(string id, Lecturer lecturer, string name, int capacity, int seatsAvailable = -1, ImmutableArray<Student> students = default)
         {
             Capacity = capacity;
             Id = id;
             Lecturer = lecturer;
             Name = name;
-            SeatsAvailable = capacity;
+            SeatsAvailable = seatsAvailable < 0 ? capacity : seatsAvailable;
             Students = students;
         }
 

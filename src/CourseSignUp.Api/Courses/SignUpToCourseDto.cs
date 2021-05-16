@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CourseSignUp.Domain.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CourseSignUp.Api.Courses
@@ -23,6 +24,13 @@ namespace CourseSignUp.Api.Courses
             [Required]
             [DataType(DataType.Date)]
             public DateTime DateOfBirth { get; set; }
+
+            public Student ToDomain()
+            => new(
+                Name,
+                DateOfBirth,
+                Email
+                );
         }
     }
 }
