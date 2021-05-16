@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CourseSignUp.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,18 @@ namespace CourseSignUp.Domain
         {
             //TODO change to get resource for multilanguage
             return $"{name}, você será notificado via email do resultado";
+        }
+
+        public static string AcceptedIntoCourseTemplate(Course course, Student student)
+        {
+            //TODO get email template from resourse for multilanguage
+
+            return $"{student.Name}, {course.Name} accepted you!";
+        }
+
+        public static string NotAcceptedIntoCourseTemplate(Course course, Student student)
+        {
+            return $"{student.Name}, {course.Name} did not accept you... :(";
         }
     }
 }

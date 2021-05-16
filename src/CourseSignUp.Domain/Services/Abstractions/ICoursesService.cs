@@ -13,6 +13,6 @@ namespace CourseSignUp.Domain.Services.Abstractions
         /// </summary>
         /// <param name="course"></param>
         /// <returns>True if student was added and false otherwise</returns>
-        Task<bool> ConsumeAvailableSpot(Course course, Student student);
+        Task<bool> ConsumeSeatAvailable(Course course, Student student);
     }
 }

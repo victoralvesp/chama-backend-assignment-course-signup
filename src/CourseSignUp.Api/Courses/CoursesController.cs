@@ -1,5 +1,5 @@
 ﻿using CourseSignUp.Domain;
-using CourseSignUp.Domain.Models.Messages;
+using CourseSignUp.Infraestructure.Messages;
 using CourseSignUp.Domain.Services.Abstractions;
 using CourseSignUp.Infraestructure.Abstractions;
 using Microsoft.AspNetCore.Mvc;

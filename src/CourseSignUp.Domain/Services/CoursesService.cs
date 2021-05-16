@@ -19,9 +19,14 @@ namespace CourseSignUp.Domain.Services
             _coursesRepo = coursesRepo;
         }
 
+        public async Task<bool> ConsumeSeatAvailable(Course course, Student student)
+        {
+            return course.SeatsAvailable > 0 && await _coursesRepo.ConsumeSeatAvailable(course, student);
+        }
+
         public async Task<Course> CreateAsync(string name, Lecturer lecturer, int capacity)
         {
-            var course = new Course(string.Empty, lecturer, name, capacity, ImmutableArray.Create<Student>());
+            var course = new Course(string.Empty, lecturer, name, capacity);
 
             course = await _coursesRepo.WriteNewAsync(course);
 

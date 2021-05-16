@@ -33,7 +33,7 @@ namespace CourseSignUp.SignupProcessor
             if (!course.Students.Contains(student))
             {
                 var processedMessage = new SignUpProcessedMessage(courseId, student, StudentAccepted: false);
-                if (await _coursesService.ConsumeAvailableSpot(course, student))
+                if (await _coursesService.ConsumeSeatAvailable(course, student))
                 {
                     processedMessage = processedMessage with { StudentAccepted = true };
                 }
