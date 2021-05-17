@@ -4,7 +4,6 @@ using CourseSignUp.Domain.Services.Abstractions;
 using CourseSignUp.Infraestructure.Abstractions;
 using CourseSignUp.Infraestructure.Messages;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
 namespace CourseSignUp.MessageProcessors
@@ -21,7 +20,7 @@ namespace CourseSignUp.MessageProcessors
         }
 
         [FunctionName("NotificationSender")]
-        public async System.Threading.Tasks.Task RunAsync([ServiceBusTrigger(Constants.SIGN_UP_PROCESSED_TOPIC, Constants.ALL_MESSAGES_SUBSCRIPTION, Connection = "ServiceBusConnection")]SignUpProcessedMessage message, ILogger log)
+        public async System.Threading.Tasks.Task RunAsync([ServiceBusTrigger(Constants.SIGN_UP_PROCESSED_TOPIC, Constants.ALL_MESSAGES_SUBSCRIPTION, Connection = Constants.SERVICE_BUS_CONNECTION_NAME)]SignUpProcessedMessage message, ILogger log)
         {
             log.LogInformation($"Sending email for sign up: {message}");
 

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseSignUp.Domain.Infraestructure.Abstractions
+namespace CourseSignUp.Infraestructure.Abstractions
 {
     public interface IEmailService
     {
-
+        void SendEmail(string email, string v);
     }
 }

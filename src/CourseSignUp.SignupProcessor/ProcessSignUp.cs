@@ -22,7 +22,7 @@ namespace CourseSignUp.SignupProcessor
         }
 
         [FunctionName("ProcessSignUp")]
-        public async System.Threading.Tasks.Task RunAsync([ServiceBusTrigger(Constants.NEW_SIGN_UP_TOPIC, Constants.ALL_MESSAGES_SUBSCRIPTION, Connection = "ServiceBusConnection")] NewSignUpMessage message, ILogger log)
+        public async System.Threading.Tasks.Task RunAsync([ServiceBusTrigger(Constants.NEW_SIGN_UP_TOPIC, Constants.ALL_MESSAGES_SUBSCRIPTION, Connection = Constants.SERVICE_BUS_CONNECTION_NAME)] NewSignUpMessage message, ILogger log)
         {
             log.LogInformation($"[INF-0001] New sign up received: {message}");
 
