@@ -1,9 +1,7 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CourseSignUp.Infraestructure;
+using CourseSignUp.Infraestructure.Abstractions;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(CourseSignUp.MessageProcessors.Startup))]
 namespace CourseSignUp.MessageProcessors
@@ -12,8 +10,7 @@ namespace CourseSignUp.MessageProcessors
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-
-            
+            builder.Services.AddCourseSignUp();
         }
     }
 }

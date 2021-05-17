@@ -1,3 +1,4 @@
+using CourseSignUp.Infraestructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,8 +18,11 @@ namespace CourseSignUp.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCourseSignUp();
             services.AddControllers();
         }
+
+        
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

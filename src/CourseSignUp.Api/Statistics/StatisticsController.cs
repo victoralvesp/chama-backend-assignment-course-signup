@@ -23,7 +23,7 @@ namespace CourseSignUp.Api.Statistics
         {
             start ??= DateTime.MinValue;
             end ??= DateTime.MaxValue;
-            var statistics = await _statisticsService.GetStatistics(courseId, start, end);
+            var statistics = await _statisticsService.GetStatistics(courseId, start.Value, end.Value);
             return Ok(new CourseStatisticsDto(statistics));
         }
     }
