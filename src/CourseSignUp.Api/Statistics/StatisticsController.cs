@@ -18,7 +18,7 @@ namespace CourseSignUp.Api.Statistics
             _coursesService = coursesService;
         }
 
-        [HttpGet("{courseId}/statistics")]
+        [HttpGet, Route("/api/v1/courses/{courseId}/statistics")]
         public async Task<IActionResult> Get(string courseId, [FromQuery] DateTime? start, [FromQuery]DateTime? end)
         {
             start ??= DateTime.MinValue;

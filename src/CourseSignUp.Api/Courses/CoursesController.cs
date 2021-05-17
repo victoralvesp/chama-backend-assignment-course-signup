@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CourseSignUp.Api.Courses
 {
-    [ApiController, Route("[controller]")]
+    [ApiController, Route("api/v1/[controller]")]
     public class CoursesController : ControllerBase
     {
         private readonly ICoursesService _coursesService;

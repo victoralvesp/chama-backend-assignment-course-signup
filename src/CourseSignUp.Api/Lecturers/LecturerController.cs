@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CourseSignUp.Api.Lecturers
 {
-    [ApiController, Route("[controller]")]
+    [ApiController, Route("api/v1/[controller]")]
     public class LecturersController : ControllerBase
     {
-        [HttpPost, Route("create")]
+        [HttpPost]
         public Task<IActionResult> Post([FromBody]CreateLecturerDto createStudentDto)
         {
             throw new NotImplementedException();

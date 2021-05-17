@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Moq" Version="4.16.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CourseSignUp.Domain\CourseSignUp.Domain.csproj" />
   </ItemGroup>
 
