@@ -45,10 +45,10 @@ namespace CourseSignUp.MessageProcessors
 
                                        //where msg.StudentAccepted == t
 
-            newStudentsPerCourse.AsParallel().ForAll(newStudents =>
+            newStudentsPerCourse.AsParallel().ForAll(async newStudents =>
             {
-                var course = _coursesService.FindAsync(newStudents.Key);
-                _statisticsService.AggregateStatistics(course, newStudents, now);
+                var course = await _coursesService.FindAsync(newStudents.Key);
+                await _statisticsService.AggregateStatistics(course, newStudents.ToImmutableArray(), now);
             });
         }
     }
