@@ -14,7 +14,7 @@ namespace CourseSignUp.Api.Courses
     {
         private readonly ICoursesService _coursesService;
         private readonly ILecturerRepository _lecturerRepo;
-        private readonly IMessageBusService _messageBusService;
+        private readonly IMessageProxy _messageBusService;
 
         [HttpGet, Route("{id}")]
         public async Task<IActionResult> Get(string id)

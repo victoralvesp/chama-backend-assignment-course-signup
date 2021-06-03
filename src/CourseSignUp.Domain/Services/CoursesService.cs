@@ -13,15 +13,24 @@ namespace CourseSignUp.Domain.Services
     public class CoursesService : ICoursesService
     {
         private readonly ICoursesRepository _coursesRepo;
+        private readonly IWaitListRepository _waitListRepo;
 
-        public CoursesService(ICoursesRepository coursesRepo)
+        public CoursesService(ICoursesRepository coursesRepo, IWaitListRepository waitListRepo)
         {
             _coursesRepo = coursesRepo;
+            _waitListRepo = waitListRepo;
         }
 
-        public async Task<bool> ConsumeSeatAvailable(Course course, Student student)
+        public async Task<int> ConsumeSeatAvailable(Course course, Student student)
         {
-            return course.SeatsAvailable > 0 && await _coursesRepo.ConsumeSeatAvailable(course, student);
+            if (course.SeatsAvailable > 0 && await _coursesRepo.ConsumeSeatAvailable(course, student))
+            {
+                return 0;
+            }
+            else
+            {
+                return await _waitListRepo.Add(course, student);
+            }
         }
 
         public async Task<Course> CreateAsync(string name, Lecturer lecturer, int capacity)
@@ -38,6 +47,16 @@ namespace CourseSignUp.Domain.Services
             var course = await _coursesRepo.FindAsync(id);
 
             return course;
+        }
+
+        public Task<Student> GetNextInWaitList(string courseId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ReleaseSeat(Course course, Student student)
+        {
+            throw new NotImplementedException();
         }
     }
 }

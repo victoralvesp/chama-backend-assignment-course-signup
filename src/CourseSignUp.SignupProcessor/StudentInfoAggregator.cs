@@ -34,14 +34,18 @@ namespace CourseSignUp.MessageProcessors
             log.LogInformation($"Calculating student aggregate info at: {now}");
 
             var batchedMessages = await _cacheService.ConsumeAllStored<SignUpProcessedMessage>(Constants.SIGN_UP_PROCESSED_TOPIC);
+            var rolledBackMessages = await _cacheService.ConsumeAllStored<SignUpProcessedMessage>(Constants.ROLL_BACK_SEAT_RESERVATION);
 
             if (batchedMessages.Any(msg => !msg.StudentAccepted))
             {
                 log.LogWarning("Only messages of accepted students should be stored", batchedMessages);
             }
-
+            // TODO: add message id to rollback to avoid refusing a student forever 
+            var rolledBackStudents = rolledBackMessages.Select(msg => msg.Student);
             var newStudentsPerCourse = (from msg in batchedMessages
-                                       group msg.Student by msg.CourseId);
+                                        let student = msg.Student
+                                        where !rolledBackStudents.Contains(student)
+                                        group msg.Student by msg.CourseId);
 
                                        //where msg.StudentAccepted == t
 

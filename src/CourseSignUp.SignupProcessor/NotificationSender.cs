@@ -20,15 +20,19 @@ namespace CourseSignUp.MessageProcessors
         }
 
         [FunctionName("NotificationSender")]
-        public async System.Threading.Tasks.Task RunAsync([ServiceBusTrigger(Constants.SIGN_UP_PROCESSED_TOPIC, Constants.ALL_MESSAGES_SUBSCRIPTION, Connection = Constants.SERVICE_BUS_CONNECTION_NAME)]SignUpProcessedMessage message, ILogger log)
+        public async System.Threading.Tasks.Task RunAsync([ServiceBusTrigger(Constants.SIGN_UP_FINISHED, Constants.ALL_MESSAGES_SUBSCRIPTION, Connection = Constants.SERVICE_BUS_CONNECTION_NAME)]SignUpProcessedMessage message, ILogger log)
         {
             log.LogInformation($"Sending email for sign up: {message}");
 
-            var (courseId, student, studentAccepted) = message;
+            var (courseId, student, _) = message;
             var course = await _coursesService.FindAsync(courseId);
-            if (studentAccepted)
+            if (message.StudentAccepted)
             {
                 _emailService.SendEmail(student.Email, ChamaSystemTexts.AcceptedIntoCourseTemplate(course, student));
+            }
+            else if (message.Status == SignUpStatus.CreditRefused)
+            {
+                _emailService.SendEmail(student.Email, ChamaSystemTexts.CreditRefusedCourseTemplate(course, student));
             }
             else
             {

@@ -32,7 +32,7 @@ namespace CourseSignUp.Infraestructure
             services.AddScoped((serv) => Mock.Of<ICoursesRepository>(MockBehavior.Loose));
             services.AddScoped((serv) => Mock.Of<ILecturerRepository>(MockBehavior.Loose));
             services.AddScoped((serv) => Mock.Of<IStatisticsRepository>(MockBehavior.Loose));
-            services.AddScoped((serv) => Mock.Of<IMessageBusService>(MockBehavior.Loose));
+            services.AddScoped((serv) => Mock.Of<IMessageProxy>(MockBehavior.Loose));
             services.AddScoped((serv) => Mock.Of<IEmailService>(MockBehavior.Loose));
             services.AddScoped((serv) => Mock.Of<IDistributedCacheService>(MockBehavior.Loose));
         }

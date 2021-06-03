@@ -8,6 +8,9 @@ namespace CourseSignUp.Domain
 {
     public static class Constants
     {
+        public const string NEW_SEAT_AVAILABLE = "NewSeatAvailable";
+
+        public const string ROLL_BACK_SEAT_RESERVATION = "RollBackSeat";
 
         public const string SERVICE_BUS_CONNECTION_NAME = "ServiceBusConnection";
         public const string NEW_SIGN_UP_TOPIC = "NewSignUp";
@@ -16,6 +19,8 @@ namespace CourseSignUp.Domain
 
         public const string ALL_MESSAGES_SUBSCRIPTION = "AllMessagesSubscriptions";
         public const string ACCEPTED_STUDENTS_MESSAGES = "OnlyAcceptedStudents";
+
+        public const string SIGN_UP_FINISHED = "SignUpFinished";
     }
 
     public static class ChamaSystemTexts
@@ -37,5 +42,10 @@ namespace CourseSignUp.Domain
         {
             return $"{student.Name}, {course.Name} did not accept you... :'(";
         }
+        public static string CreditRefusedCourseTemplate(Course course, Student student)
+        {
+            return $"{student.Name}, your credit card got refused so {course.Name} did not accept you... :'(";
+        }
+
     }
 }

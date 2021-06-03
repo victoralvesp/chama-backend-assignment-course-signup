@@ -12,7 +12,15 @@ namespace CourseSignUp.Domain.Services.Abstractions
         /// Atomic check, reduce ammount of available seats from course and add students to course
         /// </summary>
         /// <param name="course"></param>
-        /// <returns>True if student was added and false otherwise</returns>
-        Task<bool> ConsumeSeatAvailable(Course course, Student student);
+        /// <returns>0 if student was added and the order of the student on the wait list otherwise</returns>
+        Task<int> ConsumeSeatAvailable(Course course, Student student);
+        Task ReleaseSeat(Course course, Student student);
+
+        /// <summary>
+        /// Atomic check and get next student in wait list
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
+        Task<Student> GetNextInWaitList(string courseId);
     }
 }
